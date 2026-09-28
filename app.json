@@ -1,0 +1,71 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/recite/recite",
+    "pages/practice/practice",
+    "pages/profile/profile",
+    "pages/listening/listening",
+    "pages/cloze/cloze",
+    "pages/translate/translate",
+    "pages/writing/writing",
+    "pages/essays/essays",
+    "pages/essay-detail/essay-detail",
+    "pages/search/search",
+    "pages/favorites/favorites",
+    "pages/statistics/statistics",
+    "pages/games/games",
+    "pages/reading/reading",
+    "pages/reading-detail/reading-detail",
+    "pages/wordbook/wordbook",
+    "pages/settings/settings",
+    "pages/login/login"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#42A5F5",
+    "navigationBarTitleText": "英语读背",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#E3F2FD"
+  },
+  "tabBar": {
+    "color": "#90A4AE",
+    "selectedColor": "#42A5F5",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/recite/recite",
+        "text": "单词",
+        "iconPath": "assets/icons/recite.png",
+        "selectedIconPath": "assets/icons/recite-active.png"
+      },
+      {
+        "pagePath": "pages/practice/practice",
+        "text": "练习",
+        "iconPath": "assets/icons/practice.png",
+        "selectedIconPath": "assets/icons/practice-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "requiredBackgroundModes": ["audio"],
+  "permission": {
+    "scope.record": {
+      "desc": "用于口语跟读练习"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

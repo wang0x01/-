@@ -1,0 +1,662 @@
+/* ============================================================
+   app.wxss  -  英语读背小程序全局样式
+   设计风格：浅蓝色系 + 大量像素图案填充，界面不留白
+   ============================================================ */
+
+/* ---- CSS 变量 ---- */
+page {
+  --primary: #42A5F5;
+  --primary-light: #BBDEFB;
+  --primary-pale: #E3F2FD;
+  --accent: #FF7043;
+  --success: #66BB6A;
+  --warning: #FFA726;
+  --danger: #EF5350;
+  --text-dark: #263238;
+  --text-mid: #546E7A;
+  --text-light: #90A4AE;
+  --bg: #E3F2FD;
+  --card-bg: #FFFFFF;
+  --border: #BBDEFB;
+  --shadow: 0 4rpx 20rpx rgba(66, 165, 245, 0.12);
+  --radius: 20rpx;
+  --radius-lg: 28rpx;
+
+  /* 页面级应用 */
+  background-color: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  color: var(--text-dark);
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   像素图案装饰背景
+   使用纯 CSS 实现多种像素纹理，确保界面不留白
+   ============================================================ */
+
+/* 圆点像素图案 */
+.pattern-dots {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(circle, rgba(66, 165, 245, 0.18) 2rpx, transparent 2rpx),
+    radial-gradient(circle, rgba(100, 181, 246, 0.10) 1rpx, transparent 1rpx);
+  background-size: 32rpx 32rpx, 16rpx 16rpx;
+  background-position: 0 0, 8rpx 8rpx;
+}
+
+/* 网格像素图案 */
+.pattern-grid {
+  background-color: #E3F2FD;
+  background-image:
+    linear-gradient(rgba(66, 165, 245, 0.12) 2rpx, transparent 2rpx),
+    linear-gradient(90deg, rgba(66, 165, 245, 0.12) 2rpx, transparent 2rpx);
+  background-size: 40rpx 40rpx;
+}
+
+/* 斜纹像素图案 */
+.pattern-diagonal {
+  background-color: #E3F2FD;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10rpx,
+      rgba(66, 165, 245, 0.08) 10rpx,
+      rgba(66, 165, 245, 0.08) 12rpx
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 20rpx,
+      rgba(100, 181, 246, 0.06) 20rpx,
+      rgba(100, 181, 246, 0.06) 22rpx
+    );
+}
+
+/* 十字像素图案 */
+.pattern-cross {
+  background-color: #E3F2FD;
+  background-image:
+    linear-gradient(rgba(66, 165, 245, 0.10) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(66, 165, 245, 0.10) 1rpx, transparent 1rpx);
+  background-size: 24rpx 24rpx;
+  background-position: center;
+}
+
+/* 波浪像素图案 */
+.pattern-wave {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(66, 165, 245, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse at 25% 25%, rgba(100, 181, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 75%, rgba(66, 165, 245, 0.10) 0%, transparent 50%);
+  background-size: 120rpx 120rpx, 80rpx 80rpx, 100rpx 100rpx;
+  background-position: 0 0, 30rpx 30rpx, 60rpx 60rpx;
+}
+
+/* 六边形像素图案 */
+.pattern-hex {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(circle at 0% 50%, rgba(66, 165, 245, 0.10) 3rpx, transparent 3rpx),
+    radial-gradient(circle at 50% 0%, rgba(66, 165, 245, 0.10) 3rpx, transparent 3rpx),
+    radial-gradient(circle at 100% 50%, rgba(66, 165, 245, 0.10) 3rpx, transparent 3rpx),
+    radial-gradient(circle at 50% 100%, rgba(66, 165, 245, 0.10) 3rpx, transparent 3rpx),
+    radial-gradient(circle at 25% 25%, rgba(100, 181, 246, 0.06) 2rpx, transparent 2rpx),
+    radial-gradient(circle at 75% 75%, rgba(100, 181, 246, 0.06) 2rpx, transparent 2rpx);
+  background-size: 60rpx 52rpx, 60rpx 52rpx, 60rpx 52rpx, 60rpx 52rpx, 30rpx 26rpx, 30rpx 26rpx;
+  background-position: 0 0, 30rpx 26rpx, 0 0, 30rpx 26rpx, 15rpx 13rpx, 45rpx 39rpx;
+}
+
+/* 条纹像素图案 */
+.pattern-stripe {
+  background-color: #E3F2FD;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 18rpx,
+      rgba(66, 165, 245, 0.08) 18rpx,
+      rgba(66, 165, 245, 0.08) 20rpx
+    );
+}
+
+/* 随机像素点图案（用多层 radial-gradient 模拟随机分布）*/
+.pattern-pixel {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(66, 165, 245, 0.20) 1rpx, transparent 1rpx),
+    radial-gradient(circle at 25% 70%, rgba(66, 165, 245, 0.14) 1.5rpx, transparent 1.5rpx),
+    radial-gradient(circle at 40% 10%, rgba(100, 181, 246, 0.16) 2rpx, transparent 2rpx),
+    radial-gradient(circle at 55% 55%, rgba(66, 165, 245, 0.10) 1rpx, transparent 1rpx),
+    radial-gradient(circle at 70% 35%, rgba(100, 181, 246, 0.18) 1.5rpx, transparent 1.5rpx),
+    radial-gradient(circle at 85% 80%, rgba(66, 165, 245, 0.12) 1rpx, transparent 1rpx),
+    radial-gradient(circle at 15% 45%, rgba(66, 165, 245, 0.08) 2rpx, transparent 2rpx),
+    radial-gradient(circle at 60% 90%, rgba(100, 181, 246, 0.15) 1rpx, transparent 1rpx),
+    radial-gradient(circle at 80% 15%, rgba(66, 165, 245, 0.09) 1.5rpx, transparent 1.5rpx),
+    radial-gradient(circle at 35% 85%, rgba(100, 181, 246, 0.11) 1rpx, transparent 1rpx);
+  background-size: 100rpx 100rpx;
+}
+
+/* 组合图案：点 + 网格混合，适用于需要丰富纹理的区块 */
+.pattern-rich {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(circle, rgba(66, 165, 245, 0.14) 2rpx, transparent 2rpx),
+    linear-gradient(rgba(66, 165, 245, 0.06) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(66, 165, 245, 0.06) 1rpx, transparent 1rpx);
+  background-size: 32rpx 32rpx, 48rpx 48rpx, 48rpx 48rpx;
+  background-position: 0 0, 0 0, 0 0;
+}
+
+/* ============================================================
+   标准布局容器
+   ============================================================ */
+
+.container {
+  min-height: 100vh;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+
+.page-header {
+  padding: 32rpx 24rpx 24rpx;
+  position: relative;
+}
+
+.page-header .title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8rpx;
+}
+
+.page-header .subtitle {
+  font-size: 26rpx;
+  color: var(--text-light);
+}
+
+.section {
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16rpx;
+  padding-left: 16rpx;
+  border-left: 6rpx solid var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+/* ============================================================
+   卡片
+   ============================================================ */
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  overflow: hidden;
+  border: 2rpx solid var(--border);
+}
+
+.card-flat {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid var(--border);
+}
+
+.card-blue {
+  background-color: var(--primary-pale);
+  border-radius: var(--radius);
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid var(--primary-light);
+  box-shadow: var(--shadow);
+}
+
+/* ============================================================
+   按钮
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 32rpx;
+  border-radius: var(--radius);
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(66, 165, 245, 0.35);
+}
+
+.btn-primary:active {
+  background-color: #1E88E5;
+  transform: scale(0.97);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+}
+
+.btn-outline:active {
+  background-color: var(--primary-pale);
+  transform: scale(0.97);
+}
+
+.btn-ghost {
+  background-color: rgba(66, 165, 245, 0.10);
+  color: var(--primary);
+}
+
+.btn-ghost:active {
+  background-color: rgba(66, 165, 245, 0.20);
+  transform: scale(0.97);
+}
+
+.btn-sm {
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+  border-radius: 12rpx;
+}
+
+.btn-lg {
+  padding: 20rpx 48rpx;
+  font-size: 32rpx;
+  border-radius: var(--radius-lg);
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(255, 112, 67, 0.35);
+}
+
+.btn-accent:active {
+  background-color: #E64A19;
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   标签
+   ============================================================ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tag-primary {
+  background-color: rgba(66, 165, 245, 0.12);
+  color: var(--primary);
+}
+
+.tag-success {
+  background-color: rgba(102, 187, 106, 0.12);
+  color: var(--success);
+}
+
+.tag-warning {
+  background-color: rgba(255, 167, 38, 0.12);
+  color: var(--warning);
+}
+
+.tag-danger {
+  background-color: rgba(239, 83, 80, 0.12);
+  color: var(--danger);
+}
+
+.tag-level {
+  background-color: rgba(66, 165, 245, 0.15);
+  color: var(--primary);
+  font-weight: 700;
+  border: 1rpx solid var(--primary-light);
+}
+
+/* ============================================================
+   Flex 工具类
+   ============================================================ */
+
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-wrap { display: flex; flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+
+.gap-8  { gap: 8rpx; }
+.gap-16 { gap: 16rpx; }
+.gap-24 { gap: 24rpx; }
+
+/* ============================================================
+   文本工具类
+   ============================================================ */
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-sm  { font-size: 24rpx; }
+.text-lg  { font-size: 32rpx; }
+.text-xl  { font-size: 36rpx; }
+.text-xxl { font-size: 44rpx; }
+
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--text-mid); }
+.text-hint { color: var(--text-light); }
+
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+
+/* ============================================================
+   间距工具类
+   ============================================================ */
+
+.mt-8  { margin-top: 8rpx; }
+.mt-16 { margin-top: 16rpx; }
+.mt-24 { margin-top: 24rpx; }
+.mt-32 { margin-top: 32rpx; }
+
+.mb-8  { margin-bottom: 8rpx; }
+.mb-16 { margin-bottom: 16rpx; }
+.mb-24 { margin-bottom: 24rpx; }
+.mb-32 { margin-bottom: 32rpx; }
+
+.p-16 { padding: 16rpx; }
+.p-24 { padding: 24rpx; }
+.p-32 { padding: 32rpx; }
+
+/* ============================================================
+   进度条
+   ============================================================ */
+
+.progress-bar {
+  width: 100%;
+  height: 12rpx;
+  background-color: var(--primary-light);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #64B5F6, #42A5F5, #1E88E5);
+  border-radius: 6rpx;
+  transition: width 0.4s ease;
+}
+
+/* ============================================================
+   动画
+   ============================================================ */
+
+/* 淡入 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+
+/* 从下方滑入 */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.slide-up {
+  animation: slideUp 0.45s ease both;
+}
+
+/* 弹入 */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.bounce-in {
+  animation: bounceIn 0.55s ease both;
+}
+
+/* 脉冲（用于像素图案的动态效果） */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* 缓慢旋转（用于装饰元素） */
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 浮动（用于像素图案装饰） */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
+}
+
+/* 图案呼吸灯效果 */
+@keyframes patternBreath {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ============================================================
+   像素装饰边框
+   ============================================================ */
+
+.pixel-border {
+  position: relative;
+  border: 2rpx solid var(--primary-light);
+  box-shadow:
+    0 0 0 4rpx rgba(66, 165, 245, 0.06),
+    0 0 0 8rpx rgba(66, 165, 245, 0.04),
+    var(--shadow);
+  border-radius: var(--radius);
+}
+
+/* ============================================================
+   分割线
+   ============================================================ */
+
+.divider {
+  width: 100%;
+  height: 1rpx;
+  background-color: var(--border);
+  margin: 16rpx 0;
+}
+
+.hairline-bottom {
+  border-bottom: 1rpx solid var(--border);
+}
+
+/* ============================================================
+   空状态 & 加载
+   ============================================================ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+  color: var(--text-light);
+}
+
+.empty-state .icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.empty-state .text {
+  font-size: 28rpx;
+  color: var(--text-hint);
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+}
+
+.loading-spinner::after {
+  content: '';
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid var(--primary-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: slowSpin 0.8s linear infinite;
+}
+
+/* ============================================================
+   底部安全区
+   ============================================================ */
+
+.safe-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ============================================================
+   其他全局重置
+   ============================================================ */
+
+image {
+  display: block;
+}
+
+button {
+  background: none;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+}
+
+button::after {
+  border: none;
+}
+
+input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+/* 页面专属背景纹理 - 供各页面 page 标签使用 */
+.bg-dots {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(circle, rgba(66, 165, 245, 0.18) 2rpx, transparent 2rpx),
+    radial-gradient(circle, rgba(100, 181, 246, 0.10) 1rpx, transparent 1rpx);
+  background-size: 32rpx 32rpx, 16rpx 16rpx;
+  background-position: 0 0, 8rpx 8rpx;
+}
+
+.bg-grid {
+  background-color: #E3F2FD;
+  background-image:
+    linear-gradient(rgba(66, 165, 245, 0.12) 2rpx, transparent 2rpx),
+    linear-gradient(90deg, rgba(66, 165, 245, 0.12) 2rpx, transparent 2rpx);
+  background-size: 40rpx 40rpx;
+}
+
+.bg-diagonal {
+  background-color: #E3F2FD;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10rpx,
+      rgba(66, 165, 245, 0.08) 10rpx,
+      rgba(66, 165, 245, 0.08) 12rpx
+    );
+}
+
+.bg-pixel {
+  background-color: #E3F2FD;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(66, 165, 245, 0.20) 1rpx, transparent 1rpx),
+    radial-gradient(circle at 25% 70%, rgba(66, 165, 245, 0.14) 1.5rpx, transparent 1.5rpx),
+    radial-gradient(circle at 40% 10%, rgba(100, 181, 246, 0.16) 2rpx, transparent 2rpx),
+    radial-gradient(circle at 55% 55%, rgba(66, 165, 245, 0.10) 1rpx, transparent 1rpx),
+    radial-gradient(circle at 70% 35%, rgba(100, 181, 246, 0.18) 1.5rpx, transparent 1.5rpx),
+    radial-gradient(circle at 85% 80%, rgba(66, 165, 245, 0.12) 1rpx, transparent 1rpx);
+  background-size: 100rpx 100rpx;
+}
