@@ -1,0 +1,125 @@
+%% chat.py 代码架构图
+%% 一个基于 OpenAI 兼容接口 + Function Calling 的命令行 Agent 循环
+flowchart TD
+
+    %% ==================== 启动与初始化 ====================
+    subgraph INIT["① 启动初始化 Startup"]
+        direction TB
+        I1["导入标准库<br/>configparser / json / mimetypes<br/>os / shutil / subprocess / sys"]
+        I2["sys.stdout.reconfigure<br/>encoding = utf-8"]
+        I3["ConfigParser 读取 config.ini<br/>section [llm]"]
+        I4["创建 OpenAI client<br/>base_url / api_key"]
+        I1 --> I2 --> I3 --> I4
+    end
+
+    %% ==================== 工具注册 ====================
+    subgraph REG["② 工具注册 Tool Registration"]
+        direction TB
+        R1["TOOLS 列表<br/>(name, description, JSON Schema)"]
+        R2["tools = 转换为 OpenAI tools 格式<br/>{type: function, function: {...}}"]
+        R3["handlers = {name: globals()[name]}<br/>名称 → 实现函数 的调度表"]
+        R1 --> R2
+        R1 --> R3
+    end
+
+    %% ==================== 工具实现 ====================
+    subgraph TOOLBOX["③ 工具实现 Tool Handlers"]
+        direction TB
+        subgraph SYSINFO["系统信息"]
+            T1["getDate()<br/>subprocess: date /t & time /t"]
+            T2["isLeapYear(year)<br/>纯计算：闰年判断"]
+            T3["getcwd()<br/>os.getcwd()"]
+        end
+        subgraph INSPECT["读取 / 探测"]
+            T4["list_dir(path)<br/>os.listdir + 排序, [DIR]/[FILE]"]
+            T5["get_file_type(path)<br/>mimetypes.guess_type + 扩展名"]
+            T6["read_file(path)<br/>UTF-8 读取, 非文本返回 error"]
+        end
+        subgraph WRITE["增删改"]
+            T7["create_file(directory, filename)<br/>创建空文件"]
+            T8["edit_file(path, content)<br/>整体覆盖写入"]
+            T9["mkdir(path)<br/>os.makedirs(exist_ok=True)"]
+            T10["delete_dir(path)<br/>shutil.rmtree"]
+            T11["delete_file(path)<br/>os.remove"]
+            T12["rename(path, new_name)<br/>支持新路径 / 仅新名字"]
+        end
+    end
+
+    %% ==================== 主循环 ====================
+    subgraph MAIN["④ 主循环 Main Loop"]
+        direction TB
+        M1["input('please input your prompt:')"]
+        M2["messages = [{role: user, content: prompt}]"]
+        M3["client.chat.completions.create<br/>model + messages + tools"]
+        M4{"msg.tool_calls<br/>是否为空?"}
+        M5["print(msg.content)<br/>输出最终回答"]
+        M6["messages.append(msg)<br/>保留 assistant 的工具调用意图"]
+        M7["遍历每个 tool_call"]
+        M8["args = json.loads(<br/>tc.function.arguments or '{}')"]
+        M9["handlers[tc.function.name](**args)<br/>try / except 捕获异常 → 'error: ...'"]
+        M10["print('[tool] 结果前200字符')"]
+        M11["messages.append({role: tool,<br/>tool_call_id, content: result})"]
+        M6 --> M7 --> M8 --> M9 --> M10 --> M11
+    end
+
+    %% ==================== 外部依赖 ====================
+    subgraph EXT["⑤ 外部依赖 External"]
+        E1["config.ini<br/>[llm] base_url / api_key / model"]
+        E2["LLM 服务<br/>OpenAI 兼容 Chat Completions"]
+        E3["本地文件系统"]
+        E4["操作系统命令 / shell"]
+    end
+
+    %% ==================== 连线：初始化 → 注册 ====================
+    I4 --> R1
+
+    %% ==================== 连线：注册 → 实现 ====================
+    R3 -.->|"动态解析 globals()"| T1
+    R3 -.-> T2
+    R3 -.-> T3
+    R3 -.-> T4
+    R3 -.-> T5
+    R3 -.-> T6
+    R3 -.-> T7
+    R3 -.-> T8
+    R3 -.-> T9
+    R3 -.-> T10
+    R3 -.-> T11
+    R3 -.-> T12
+
+    %% ==================== 连线：主循环 ====================
+    R2 -->|"tools 参数"| M3
+    M1 --> M2 --> M3 --> M4
+    M4 -->|"无工具调用"| M5
+    M5 -->|"回到外层，等待下一条指令"| M1
+    M4 -->|"有工具调用"| M6
+    M11 -->|"带工具结果再次请求（内层循环）"| M3
+
+    %% ==================== 连线：外部依赖 ====================
+    E1 -->|"读取配置"| I3
+    E2 -->|"HTTPS 请求 / 响应"| M3
+    M9 --> T1
+    M9 --> T7
+    T1 --> E4
+    T3 --> E3
+    T4 --> E3
+    T5 --> E3
+    T6 --> E3
+    T7 --> E3
+    T8 --> E3
+    T9 --> E3
+    T10 --> E3
+    T11 --> E3
+    T12 --> E3
+
+    %% ==================== 样式 ====================
+    classDef initStyle fill:#e8f1fb,stroke:#3b6fa8,stroke-width:1px,color:#12385c
+    classDef regStyle fill:#fdf3e3,stroke:#c58b2c,stroke-width:1px,color:#6b4610
+    classDef toolStyle fill:#eaf6ec,stroke:#3f9159,stroke-width:1px,color:#1d5230
+    classDef mainStyle fill:#f6e9f7,stroke:#9850a3,stroke-width:1px,color:#552a5c
+    classDef extStyle fill:#f0f0f0,stroke:#777,stroke-width:1px,color:#333
+    class I1,I2,I3,I4 initStyle
+    class R1,R2,R3 regStyle
+    class T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12 toolStyle
+    class M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11 mainStyle
+    class E1,E2,E3,E4 extStyle
